@@ -67,7 +67,7 @@ export default async function HistoricPage(props: HistoricPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Sidebar izquierda (desktop only) */}
           <aside className="hidden lg:block lg:col-span-3">
@@ -78,7 +78,7 @@ export default async function HistoricPage(props: HistoricPageProps) {
           <main className="lg:col-span-9">
             <div className="bg-white border border-gray-200 shadow-sm">
               {/* Header de página */}
-              <div className="border-b border-gray-200 px-6 py-6">
+              <div className="border-b border-gray-200 px-5 sm:px-6 py-5 sm:py-6">
                 <PageSectionHeader
                   title="Histórico"
                   description="Artículos de ediciones anteriores. Consulta nuestro archivo de publicaciones pasadas para encontrar reportajes, análisis y crónicas de ediciones anteriores."
@@ -87,7 +87,7 @@ export default async function HistoricPage(props: HistoricPageProps) {
 
               {/* Sin artículos */}
               {!hasArticles && (
-                <div className="px-6 py-12">
+                <div className="px-5 sm:px-6 py-10 sm:py-12">
                   <EmptyState
                     title="No hay artículos en el archivo"
                     message="Aún no hay artículos archivados disponibles."
@@ -99,8 +99,8 @@ export default async function HistoricPage(props: HistoricPageProps) {
               {hasArticles && (
                 <>
                   {/* Lista de artículos */}
-                  <div className="px-6 py-8">
-                    <div className="space-y-6">
+                  <div className="px-5 sm:px-6 py-6 sm:py-8">
+                    <div className="space-y-4 sm:space-y-6">
                       {data.items.map((article) => (
                         <ArticleListItem
                           key={article.slug}
@@ -116,7 +116,7 @@ export default async function HistoricPage(props: HistoricPageProps) {
 
                   {/* Paginación */}
                   {data.totalPages > 1 && (
-                    <div className="border-t border-gray-200 px-6">
+                    <div className="border-t border-gray-200 px-5 sm:px-6">
                       <Pagination
                         currentPage={page}
                         totalPages={data.totalPages}

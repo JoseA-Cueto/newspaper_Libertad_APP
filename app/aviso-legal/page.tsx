@@ -3,10 +3,10 @@ import { PageSectionHeader } from "@/components";
 export default function AvisoLegalPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <article className="bg-white border border-gray-200 shadow-sm p-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <article className="bg-white border border-gray-200 shadow-sm p-5 sm:p-8">
           {/* Header */}
-          <header className="mb-8 pb-6 border-b-2 border-gray-300">
+          <header className="mb-6 sm:mb-8 pb-5 sm:pb-6 border-b-2 border-gray-300">
             <PageSectionHeader
               title="Aviso Legal"
               description="Información legal sobre el uso y acceso a este sitio"
@@ -14,7 +14,7 @@ export default function AvisoLegalPage() {
           </header>
 
           {/* Contenido */}
-          <div className="prose prose-gray max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-800 prose-p:leading-relaxed">
+          <div className="prose prose-sm sm:prose-base prose-gray max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-headings:mt-6 prose-headings:mb-3 prose-p:text-gray-800 prose-p:leading-relaxed prose-p:mb-4">
             {/* Identificación */}
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Identificación del sitio</h2>

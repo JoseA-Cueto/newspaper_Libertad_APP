@@ -84,7 +84,7 @@ export default async function SectionPage(props: SectionPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Sidebar izquierda (desktop only) */}
           <aside className="hidden lg:block lg:col-span-3">
@@ -95,7 +95,7 @@ export default async function SectionPage(props: SectionPageProps) {
           <main className="lg:col-span-9">
             <div className="bg-white border border-gray-200 shadow-sm">
               {/* Header de sección */}
-              <div className="border-b border-gray-200 px-6 py-6">
+              <div className="border-b border-gray-200 px-5 sm:px-6 py-5 sm:py-6">
                 <PageSectionHeader
                   title={sectionMeta.title}
                   description={sectionMeta.description}
@@ -104,7 +104,7 @@ export default async function SectionPage(props: SectionPageProps) {
 
               {/* Sin artículos */}
               {!hasArticles && (
-                <div className="px-6 py-12">
+                <div className="px-5 sm:px-6 py-10 sm:py-12">
                   <EmptyState
                     title={`No hay artículos en ${sectionMeta.title}`}
                     message="Aún no se han publicado artículos en esta sección. Vuelve pronto para ver nuevo contenido."
@@ -117,7 +117,7 @@ export default async function SectionPage(props: SectionPageProps) {
                 <>
                   {/* Artículo destacado (primero) */}
                   {data.items.length >= 1 && (
-                    <div className="border-b border-gray-200 px-6 py-8">
+                    <div className="border-b border-gray-200 px-5 sm:px-6 py-6 sm:py-8">
                       <ArticleCardText
                         title={data.items[0].title}
                         subtitle={data.items[0].subtitle}
@@ -131,8 +131,8 @@ export default async function SectionPage(props: SectionPageProps) {
 
                   {/* Grid de artículos secundarios (2-5) */}
                   {data.items.length > 1 && (
-                    <div className="border-b border-gray-200 px-6 py-8">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="border-b border-gray-200 px-5 sm:px-6 py-6 sm:py-8">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                         {data.items.slice(1, 5).map((article) => (
                           <ArticleCardText
                             key={article.slug}
@@ -150,11 +150,11 @@ export default async function SectionPage(props: SectionPageProps) {
 
                   {/* Lista de más artículos (6+) */}
                   {data.items.length > 5 && (
-                    <div className="border-b border-gray-200 px-6 py-8">
-                      <h2 className="text-xl font-bold text-gray-900 mb-6 border-b border-gray-300 pb-2">
+                    <div className="border-b border-gray-200 px-5 sm:px-6 py-6 sm:py-8">
+                      <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 border-b border-gray-300 pb-2 sm:pb-3">
                         Más artículos
                       </h2>
-                      <div className="space-y-6">
+                      <div className="space-y-4 sm:space-y-6">
                         {data.items.slice(5).map((article) => (
                           <ArticleListItem
                             key={article.slug}
@@ -171,7 +171,7 @@ export default async function SectionPage(props: SectionPageProps) {
 
                   {/* Paginación */}
                   {data.totalPages > 1 && (
-                    <div className="border-t border-gray-200 px-6">
+                    <div className="border-t border-gray-200 px-5 sm:px-6">
                       <Pagination
                         currentPage={page}
                         totalPages={data.totalPages}

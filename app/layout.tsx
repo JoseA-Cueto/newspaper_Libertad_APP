@@ -28,7 +28,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
       </head>
       <body className="bg-white text-gray-900 antialiased">
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen pb-24 sm:pb-0">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

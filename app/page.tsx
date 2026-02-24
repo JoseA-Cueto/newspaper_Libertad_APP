@@ -75,24 +75,26 @@ export default async function HomePage(props: HomePageProps) {
     <div className="bg-gray-50 min-h-screen">
       {/* Masthead / Tagline */}
       <div className="bg-white border-b border-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
-          <p className="text-sm text-gray-600 italic">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 text-center">
+          <p className="text-xs sm:text-sm text-gray-600 italic">
             Periódico de criterio, memoria y cultura cívica
           </p>
         </div>
       </div>
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Sidebar Left (Desktop only) */}
-          <SidebarLeft sections={sidebarSections} />
+          <aside className="hidden lg:block lg:col-span-3">
+            <SidebarLeft sections={sidebarSections} />
+          </aside>
 
           {/* Main Content */}
-          <main className="flex-1 bg-white shadow-sm">
+          <main className="lg:col-span-9 bg-white shadow-sm border border-gray-200">
             {/* Edition Date Banner */}
-            <div className="border-b-4 border-gray-900 py-4 px-6">
-              <p className="text-sm font-semibold text-gray-700">
+            <div className="border-b-4 border-gray-900 py-3 sm:py-4 px-5 sm:px-6">
+              <p className="text-xs sm:text-sm font-semibold text-gray-700">
                 Edición del{" "}
                 <time dateTime={new Date().toISOString()}>
                   {formatDate(new Date().toISOString())}
@@ -101,12 +103,12 @@ export default async function HomePage(props: HomePageProps) {
             </div>
 
             {/* Hero Article */}
-            <article className="border-b-2 border-gray-300 p-6 lg:p-8">
-              <div className="mb-3 flex items-center gap-3 text-xs text-gray-600 uppercase tracking-wide">
+            <article className="border-b-2 border-gray-300 p-5 sm:p-6 lg:p-8">
+              <div className="mb-2 sm:mb-3 flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-gray-600 uppercase tracking-wide">
                 {heroArticle.sectionName && (
                   <a
                     href={`/seccion/${heroArticle.sectionSlug}`}
-                    className="font-bold text-blue-700 hover:text-blue-900"
+                    className="font-bold text-blue-700 hover:text-blue-900 transition"
                   >
                     {heroArticle.sectionName}
                   </a>
@@ -122,13 +124,13 @@ export default async function HomePage(props: HomePageProps) {
               </div>
 
               <a href={`/articulo/${heroArticle.slug}`} className="group">
-                <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight group-hover:text-blue-700 transition">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight group-hover:text-blue-700 transition">
                   {heroArticle.title}
                 </h1>
               </a>
 
               {heroArticle.subtitle && (
-                <p className="text-xl text-gray-700 leading-relaxed italic border-l-4 border-gray-300 pl-4">
+                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed italic border-l-4 border-gray-300 pl-3 sm:pl-4">
                   {heroArticle.subtitle}
                 </p>
               )}
@@ -136,9 +138,9 @@ export default async function HomePage(props: HomePageProps) {
 
             {/* Secondary Articles Grid */}
             {secondaryArticles.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-200">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-gray-200">
                 {secondaryArticles.map((article) => (
-                  <div key={article.id} className="bg-white p-6">
+                  <div key={article.id} className="bg-white p-5 sm:p-6">
                     <ArticleCardText
                       title={article.title}
                       subtitle={article.subtitle}
@@ -155,8 +157,8 @@ export default async function HomePage(props: HomePageProps) {
 
             {/* More Articles List */}
             {listArticles.length > 0 && (
-              <div className="border-t-2 border-gray-300 p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-gray-900">
+              <div className="border-t-2 border-gray-300 p-5 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 pb-2 sm:pb-3 border-b-2 border-gray-900">
                   Más artículos
                 </h2>
                 <div className="space-y-1">
@@ -176,7 +178,7 @@ export default async function HomePage(props: HomePageProps) {
 
             {/* Pagination */}
             {data.totalPages > 1 && (
-              <div className="border-t border-gray-200 px-6">
+              <div className="border-t border-gray-200 px-5 sm:px-6">
                 <Pagination
                   currentPage={page}
                   totalPages={data.totalPages}
