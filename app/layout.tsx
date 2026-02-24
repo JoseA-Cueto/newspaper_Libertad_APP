@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CookieNotice from "@/components/CookieNotice";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -32,6 +33,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+        <CookieNotice />
       </body>
     </html>
   );

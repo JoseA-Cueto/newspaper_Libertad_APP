@@ -11,4 +11,5 @@ export { default as ArticleCardText } from "./ArticleCardText";
 export { default as ArticleListItem } from "./ArticleListItem";
 export { default as Pagination } from "./Pagination";
 export { default as PageSectionHeader } from "./PageSectionHeader";
+export { default as CookieNotice } from "./CookieNotice";
 export { LoadingState, ErrorState, EmptyState } from "./States";

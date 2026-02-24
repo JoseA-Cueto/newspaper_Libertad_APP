@@ -32,11 +32,6 @@ export default function Footer() {
                   Histórico
                 </Link>
               </li>
-              <li>
-                <Link href="/colabora" className="hover:text-white transition">
-                  Colabora
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -52,16 +47,6 @@ export default function Footer() {
               <li>
                 <Link href="/privacidad" className="hover:text-white transition">
                   Privacidad
-                </Link>
-              </li>
-              <li>
-                <Link href="/cookies" className="hover:text-white transition">
-                  Cookies
-                </Link>
-              </li>
-              <li>
-                <Link href="/normas-colaboracion" className="hover:text-white transition">
-                  Normas de colaboración
                 </Link>
               </li>
             </ul>
