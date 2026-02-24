@@ -181,6 +181,7 @@ export default async function HomePage(props: HomePageProps) {
                   currentPage={page}
                   totalPages={data.totalPages}
                   baseUrl="/?page="
+                  pageSize={pageSize}
                 />
               </div>
             )}
