@@ -3,7 +3,7 @@
  */
 
 /**
- * Formatea una fecha ISO a formato legible
+ * Formatea una fecha ISO a formato legible en español
  */
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -11,6 +11,18 @@ export function formatDate(dateString: string): string {
     year: "numeric",
     month: "long",
     day: "numeric",
+  });
+}
+
+/**
+ * Formatea una fecha ISO a formato corto (DD/MM/YYYY)
+ */
+export function formatDateShort(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("es-ES", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   });
 }
 
@@ -58,4 +70,61 @@ export function truncateText(text: string, maxLength: number = 150): string {
  */
 export function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
+
+/**
+ * Normaliza un slug (lowercase, guiones, sin caracteres especiales)
+ */
+export function normalizeSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // quitar acentos
+    .replace(/[^a-z0-9\s-]/g, "") // solo letras, números, espacios y guiones
+    .trim()
+    .replace(/\s+/g, "-") // espacios a guiones
+    .replace(/-+/g, "-"); // guiones múltiples a uno solo
+}
+
+/**
+ * Construye URL con parámetros de query
+ */
+export function buildUrl(
+  basePath: string,
+  params: Record<string, string | number | undefined>
+): string {
+  const query = Object.entries(params)
+    .filter(([_, value]) => value !== undefined)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value!)}`)
+    .join("&");
+
+  return query ? `${basePath}?${query}` : basePath;
+}
+
+/**
+ * Valida si una cadena es una URL válida
+ */
+export function isValidUrl(url: string): boolean {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Extrae el primer párrafo de un texto markdown (para previews)
+ */
+export function extractFirstParagraph(markdown: string): string {
+  const lines = markdown.split("\n").filter((line) => line.trim() !== "");
+  
+  for (const line of lines) {
+    // Ignorar títulos, listas, etc.
+    if (!line.startsWith("#") && !line.startsWith("-") && !line.startsWith("*")) {
+      return line.trim();
+    }
+  }
+  
+  return lines[0] || "";
 }
