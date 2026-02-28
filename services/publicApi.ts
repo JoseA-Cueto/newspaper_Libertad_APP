@@ -12,7 +12,7 @@ import {
 } from "@/mocks/data";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5237";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5237/api";
 const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
 
 /**
@@ -34,11 +34,14 @@ export class ApiError extends Error {
  */
 async function fetchFromApi<T>(
   endpoint: string,
-  mockFallback: T,
+  mockFallback?: T,
   options: RequestInit = {}
 ): Promise<T> {
   // Si estamos forzando mocks, retornar inmediatamente
   if (USE_MOCK_DATA) {
+    if (typeof mockFallback === "undefined") {
+      throw new ApiError("Mock data not found", 404, endpoint);
+    }
     console.info(`[MOCK MODE] Using mock data for ${endpoint}`);
     return mockFallback;
   }
@@ -47,6 +50,7 @@ async function fetchFromApi<T>(
 
   try {
     const response = await fetch(url, {
+      cache: "no-store",
       ...options,
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +71,7 @@ async function fetchFromApi<T>(
     console.warn(`API request failed for ${endpoint}, using mock fallback:`, error);
     
     // En desarrollo, usar mocks como fallback
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "development" && typeof mockFallback !== "undefined") {
       return mockFallback;
     }
 
@@ -91,7 +95,7 @@ export async function getHome(
   page: number = 1,
   pageSize: number = 10
 ): Promise<PagedResponse<ArticleSummary>> {
-  const endpoint = `/api/public/home?page=${page}&pageSize=${pageSize}`;
+  const endpoint = `/public/home?page=${page}&pageSize=${pageSize}`;
   return fetchFromApi(endpoint, mockHomeResponse);
 }
 
@@ -103,7 +107,7 @@ export async function getSectionBySlug(
   page: number = 1,
   pageSize: number = 10
 ): Promise<PagedResponse<ArticleSummary>> {
-  const endpoint = `/api/public/sections/${slug}?page=${page}&pageSize=${pageSize}`;
+  const endpoint = `/public/sections/${slug}?page=${page}&pageSize=${pageSize}`;
   const mockData = getMockSectionArticles(slug);
   return fetchFromApi(endpoint, mockData);
 }
@@ -114,14 +118,15 @@ export async function getSectionBySlug(
 export async function getPublicArticleBySlug(
   slug: string
 ): Promise<ArticleDetail> {
-  const endpoint = `/api/public/articles/${slug}`;
-  const mockData = getMockArticleBySlug(slug);
-  
-  if (!mockData) {
+  const endpoint = `/public/articles/${slug}`;
+  const mockData = getMockArticleBySlug(slug) ?? undefined;
+  const article = await fetchFromApi<ArticleDetail | undefined>(endpoint, mockData);
+
+  if (!article) {
     throw new ApiError("Article not found", 404, endpoint);
   }
-  
-  return fetchFromApi(endpoint, mockData);
+
+  return article;
 }
 
 /**
@@ -131,7 +136,7 @@ export async function getArchive(
   page: number = 1,
   pageSize: number = 10
 ): Promise<PagedResponse<ArticleSummary>> {
-  const endpoint = `/api/public/archive?page=${page}&pageSize=${pageSize}`;
+  const endpoint = `/public/archive?page=${page}&pageSize=${pageSize}`;
   return fetchFromApi(endpoint, mockArchiveResponse);
 }
 
@@ -140,8 +145,9 @@ export async function getArchive(
  */
 export async function checkApiHealth(): Promise<boolean> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/health`, {
+    const response = await fetch(`${API_BASE_URL}/health`, {
       method: "GET",
+      cache: "no-store",
     });
     return response.ok;
   } catch {

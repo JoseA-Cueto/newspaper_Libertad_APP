@@ -17,13 +17,13 @@ interface SidebarLeftProps {
 export default function SidebarLeft({ sections, className = "" }: SidebarLeftProps) {
   return (
     <aside
-      className={`hidden lg:block w-64 flex-shrink-0 ${className}`}
+      className={`hidden lg:block w-full flex-shrink-0 ${className}`}
       aria-label="Sidebar navigation"
     >
-      <div className="sticky top-20 space-y-8">
+      <div className="sticky top-8 space-y-6 border-r border-gray-300 pr-6">
         {sections.map((section, idx) => (
-          <div key={idx} className="border-l-2 border-gray-200 pl-4">
-            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-3">
+          <div key={idx} className="border-b border-gray-200 pb-4">
+            <h3 className="text-3xl font-semibold text-black mb-3">
               {section.title}
             </h3>
             <nav className="space-y-2">
@@ -33,8 +33,8 @@ export default function SidebarLeft({ sections, className = "" }: SidebarLeftPro
                   href={item.href}
                   className={`block text-sm transition ${
                     item.isActive
-                      ? "font-semibold text-gray-900"
-                      : "text-gray-600 hover:text-gray-900"
+                      ? "font-semibold text-black"
+                      : "text-black hover:text-blue-900"
                   }`}
                 >
                   {item.label}

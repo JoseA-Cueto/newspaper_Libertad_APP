@@ -1,7 +1,7 @@
 import { getPublicArticleBySlug } from "@/services";
 import { SidebarLeft } from "@/components";
 import { formatDate } from "@/lib/utils";
-import { getAllSections } from "@/lib/section-metadata";
+import { getSectionNavLinks } from "@/lib/section-metadata";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
@@ -28,46 +28,29 @@ export default async function ArticlePage(props: ArticlePageProps) {
   const displayDate = article.publishedAt || article.issueDate;
 
   // Sidebar contextual
-  const allSections = getAllSections();
-  const currentSectionSlug = article.sectionSlug;
-  const otherSections = allSections.filter((s) => s.slug !== currentSectionSlug);
+  const sectionLinks = getSectionNavLinks();
 
   const sidebarSections = [
     {
-      title: "Navegación",
+      title: "Edición",
       items: [
+        { label: formatDate(new Date().toISOString()), href: "/" },
         { label: "Inicio", href: "/" },
-        { label: "Histórico", href: "/historico" },
+        ...sectionLinks.map((section) => ({
+          label: section.label,
+          href: section.href,
+          isActive: section.href === `/seccion/${article.sectionSlug}`,
+        })),
       ],
+    },
+    {
+      title: "En esta edición",
+      items: [{ label: article.title, href: `/articulo/${article.slug}` }],
     },
   ];
 
-  // Agregar sección actual si existe
-  if (article.sectionName && article.sectionSlug) {
-    sidebarSections.push({
-      title: "Esta sección",
-      items: [
-        {
-          label: article.sectionName,
-          href: `/seccion/${article.sectionSlug}`,
-        },
-      ],
-    });
-  }
-
-  // Agregar otras secciones
-  if (otherSections.length > 0) {
-    sidebarSections.push({
-      title: "Explorar",
-      items: otherSections.map((s) => ({
-        label: s.title,
-        href: `/seccion/${s.slug}`,
-      })),
-    });
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Sidebar izquierda (desktop only) */}
@@ -77,7 +60,7 @@ export default async function ArticlePage(props: ArticlePageProps) {
 
           {/* Contenido principal */}
           <main className="lg:col-span-9">
-            <article className="bg-white border border-gray-200 shadow-sm">
+            <article className="bg-white border border-gray-200">
               {/* Meta info */}
               <div className="border-b border-gray-200 px-5 sm:px-6 py-4 sm:py-5">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600">
@@ -120,7 +103,7 @@ export default async function ArticlePage(props: ArticlePageProps) {
               </div>
 
               {/* Navegación final */}
-              <footer className="border-t-2 border-gray-300 px-5 sm:px-6 py-6 bg-gray-50">
+              <footer className="border-t-2 border-gray-300 px-5 sm:px-6 py-6 bg-white">
                 <nav className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4 text-xs sm:text-sm">
                   <Link
                     href="/"

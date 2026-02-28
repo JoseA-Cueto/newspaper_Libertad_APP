@@ -40,7 +40,7 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
     <>
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black/50 z-40 md:hidden"
+        className="fixed inset-0 bg-black/40 z-40 md:hidden"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -55,7 +55,7 @@ export default function MobileMenu({ isOpen, onClose, links }: MobileMenuProps) 
             <Link
               key={link.href}
               href={link.href}
-              className="block py-3 px-4 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-md transition"
+              className="block py-3 px-4 text-base font-medium text-black border-b border-gray-200 hover:text-blue-900 transition-colors"
               onClick={onClose}
             >
               {link.label}

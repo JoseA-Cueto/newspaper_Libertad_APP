@@ -3,58 +3,51 @@
 import Link from "next/link";
 import { useState } from "react";
 import MobileMenu from "./MobileMenu";
+import { formatDate } from "@/lib/utils";
+import { getSectionNavLinks } from "@/lib/section-metadata";
 
-const navLinks = [
-  { label: "Inicio", href: "/" },
-  { label: "Política", href: "/seccion/politica" },
-  { label: "Economía", href: "/seccion/economia" },
-  { label: "Sociedad", href: "/seccion/sociedad" },
-  { label: "Cultura", href: "/seccion/cultura" },
-  { label: "Opinión", href: "/seccion/opinion" },
-  { label: "Histórico", href: "/historico" },
-  { label: "Colabora", href: "/colabora" },
-];
+const navLinks = getSectionNavLinks();
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const today = formatDate(new Date().toISOString());
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
+    <header className="border-b border-gray-300 bg-white text-black">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="hidden md:flex items-center justify-between text-xs tracking-wide uppercase border-b border-gray-300 pb-3">
+          <div className="flex items-center gap-2 text-black">
+            <span>Quiénes somos</span>
+            <span className="text-gray-400">·</span>
+            <span>Contacto</span>
+          </div>
+          <time dateTime={new Date().toISOString()}>{today}</time>
+        </div>
+
+        <div className="flex justify-between items-center py-5">
+          <div className="md:hidden" />
+          <div className="flex-1 text-center">
             <Link
               href="/"
-              className="text-2xl font-bold text-gray-900 hover:text-gray-700 transition tracking-tight"
+              className="font-serif text-5xl md:text-7xl font-bold leading-none tracking-tight text-black"
             >
               LIBERTAD
             </Link>
+            <p className="mt-3 text-[11px] sm:text-xs md:text-sm tracking-wide uppercase text-black">
+              PERIÓDICO DE CRITERIO, MEMORIA Y CULTURA CÍVICA
+            </p>
           </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-6 lg:gap-8" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-gray-700 hover:text-gray-900 transition border-b-2 border-transparent hover:border-gray-900 pb-1"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 hover:bg-gray-100 rounded-md transition"
+            className="md:hidden p-2 rounded-md border border-gray-300"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Abrir menú de navegación"
             aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
               <svg
-                className="w-6 h-6"
+                className="w-6 h-6 text-black"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -68,7 +61,7 @@ export default function Header() {
               </svg>
             ) : (
               <svg
-                className="w-6 h-6"
+                className="w-6 h-6 text-black"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -83,6 +76,21 @@ export default function Header() {
             )}
           </button>
         </div>
+
+        <nav
+          className="hidden md:flex items-center justify-between border-t border-b border-gray-300 py-3"
+          aria-label="Main navigation"
+        >
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm lg:text-base font-semibold text-black hover:text-blue-900 transition-colors whitespace-nowrap"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
       </div>
 
       {/* Mobile Menu */}

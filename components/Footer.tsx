@@ -6,12 +6,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-400 py-12 mt-16">
+    <footer className="bg-white text-black py-10 mt-10 border-t border-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* About */}
           <div>
-            <h3 className="text-white font-bold mb-4">LIBERTAD</h3>
+            <h3 className="text-black font-bold mb-4">LIBERTAD</h3>
             <p className="text-sm">
               Periódico digital independiente con enfoque text-first, 
               comprometido con la información clara y verificada.
@@ -20,15 +20,15 @@ export default function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Enlaces</h4>
+            <h4 className="text-black font-semibold mb-4">Enlaces</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/" className="hover:text-white transition">
+                <Link href="/" className="hover:text-blue-900 transition">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/historico" className="hover:text-white transition">
+                <Link href="/historico" className="hover:text-blue-900 transition">
                   Histórico
                 </Link>
               </li>
@@ -37,15 +37,15 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Legal</h4>
+            <h4 className="text-black font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/aviso-legal" className="hover:text-white transition">
+                <Link href="/aviso-legal" className="hover:text-blue-900 transition">
                   Aviso legal
                 </Link>
               </li>
               <li>
-                <Link href="/privacidad" className="hover:text-white transition">
+                <Link href="/privacidad" className="hover:text-blue-900 transition">
                   Privacidad
                 </Link>
               </li>
@@ -53,7 +53,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-8">
+        <div className="border-t border-gray-300 pt-8">
           <p className="text-center text-sm">
             © {currentYear} LIBERTAD. Todos los derechos reservados.
           </p>

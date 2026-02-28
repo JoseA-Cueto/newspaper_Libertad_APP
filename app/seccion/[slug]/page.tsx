@@ -8,7 +8,7 @@ import {
   EmptyState,
 } from "@/components";
 import { formatDate } from "@/lib/utils";
-import { getSectionMetadata, getAllSections } from "@/lib/section-metadata";
+import { getSectionMetadata, getSectionNavLinks } from "@/lib/section-metadata";
 import { notFound } from "next/navigation";
 
 interface SectionPageProps {
@@ -44,29 +44,19 @@ export default async function SectionPage(props: SectionPageProps) {
   const hasArticles = data.items && data.items.length > 0;
 
   // Sidebar sections contextual
-  const allSections = getAllSections();
-  const otherSections = allSections.filter((s) => s.slug !== slug);
+  const sectionLinks = getSectionNavLinks();
 
   const sidebarSections = [
     {
-      title: sectionMeta.title,
+      title: "Edición",
       items: [
         { label: formatDate(new Date().toISOString()), href: `/seccion/${slug}` },
-        { label: "Actualidad", href: `/seccion/${slug}`, isActive: true },
-      ],
-    },
-    {
-      title: "Otras secciones",
-      items: otherSections.map((s) => ({
-        label: s.title,
-        href: `/seccion/${s.slug}`,
-      })),
-    },
-    {
-      title: "Navegación",
-      items: [
         { label: "Inicio", href: "/" },
-        { label: "Histórico", href: "/historico" },
+        ...sectionLinks.map((section) => ({
+          label: section.label,
+          href: section.href,
+          isActive: section.href === `/seccion/${slug}`,
+        })),
       ],
     },
   ];
@@ -74,7 +64,7 @@ export default async function SectionPage(props: SectionPageProps) {
   // Agregar titulares rápidos si hay artículos
   if (hasArticles) {
     sidebarSections.push({
-      title: "En esta página",
+      title: "En esta edición",
       items: data.items.slice(0, 5).map((article) => ({
         label: article.title,
         href: `/articulo/${article.slug}`,
@@ -83,7 +73,7 @@ export default async function SectionPage(props: SectionPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Sidebar izquierda (desktop only) */}
@@ -93,7 +83,7 @@ export default async function SectionPage(props: SectionPageProps) {
 
           {/* Contenido principal */}
           <main className="lg:col-span-9">
-            <div className="bg-white border border-gray-200 shadow-sm">
+            <div className="bg-white border border-gray-200">
               {/* Header de sección */}
               <div className="border-b border-gray-200 px-5 sm:px-6 py-5 sm:py-6">
                 <PageSectionHeader

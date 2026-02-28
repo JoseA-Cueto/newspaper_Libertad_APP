@@ -7,6 +7,7 @@ import {
   EmptyState,
 } from "@/components";
 import { formatDate } from "@/lib/utils";
+import { getSectionNavLinks } from "@/lib/section-metadata";
 
 interface HomePageProps {
   searchParams: Promise<{
@@ -39,6 +40,7 @@ export default async function HomePage(props: HomePageProps) {
   const [heroArticle, ...restArticles] = data.items;
   const secondaryArticles = restArticles.slice(0, 4);
   const listArticles = restArticles.slice(4);
+  const sectionLinks = getSectionNavLinks();
 
   // Sidebar sections
   const sidebarSections = [
@@ -46,24 +48,15 @@ export default async function HomePage(props: HomePageProps) {
       title: "Edición",
       items: [
         { label: formatDate(new Date().toISOString()), href: "/" },
-        { label: "Actualidad", href: "/", isActive: true },
+        { label: "Inicio", href: "/", isActive: true },
+        ...sectionLinks.map((section) => ({
+          label: section.label,
+          href: section.href,
+        })),
       ],
     },
     {
-      title: "Secciones",
-      items: [
-        { label: "Inicio", href: "/" },
-        { label: "Política", href: "/seccion/politica" },
-        { label: "Economía", href: "/seccion/economia" },
-        { label: "Sociedad", href: "/seccion/sociedad" },
-        { label: "Cultura", href: "/seccion/cultura" },
-        { label: "Opinión", href: "/seccion/opinion" },
-        { label: "Histórico", href: "/historico" },
-        { label: "Colabora", href: "/colabora" },
-      ],
-    },
-    {
-      title: "Piezas de hoy",
+      title: "En esta edición",
       items: data.items.slice(0, 5).map((article) => ({
         label: article.title,
         href: `/articulo/${article.slug}`,
@@ -72,16 +65,7 @@ export default async function HomePage(props: HomePageProps) {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* Masthead / Tagline */}
-      <div className="bg-white border-b border-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 text-center">
-          <p className="text-xs sm:text-sm text-gray-600 italic">
-            Periódico de criterio, memoria y cultura cívica
-          </p>
-        </div>
-      </div>
-
+    <div className="bg-white min-h-screen">
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
@@ -91,7 +75,7 @@ export default async function HomePage(props: HomePageProps) {
           </aside>
 
           {/* Main Content */}
-          <main className="lg:col-span-9 bg-white shadow-sm border border-gray-200">
+          <main className="lg:col-span-9 bg-white border border-gray-200">
             {/* Edition Date Banner */}
             <div className="border-b-4 border-gray-900 py-3 sm:py-4 px-5 sm:px-6">
               <p className="text-xs sm:text-sm font-semibold text-gray-700">

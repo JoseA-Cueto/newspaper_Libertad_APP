@@ -7,8 +7,7 @@ import {
   EmptyState,
 } from "@/components";
 import { formatDate } from "@/lib/utils";
-import { getAllSections } from "@/lib/section-metadata";
-import Link from "next/link";
+import { getSectionNavLinks } from "@/lib/section-metadata";
 
 interface HistoricPageProps {
   searchParams: Promise<{
@@ -29,44 +28,40 @@ export default async function HistoricPage(props: HistoricPageProps) {
   const hasArticles = data.items && data.items.length > 0;
 
   // Sidebar contextual
-  const allSections = getAllSections();
+  const sectionLinks = getSectionNavLinks();
 
   const sidebarSections = [
     {
-      title: "Navegación",
+      title: "Edición",
       items: [
+        { label: formatDate(new Date().toISOString()), href: "/historico" },
         { label: "Inicio", href: "/" },
-        { label: "Actualidad", href: "/" },
+        ...sectionLinks.map((section) => ({
+          label: section.label,
+          href: section.href,
+        })),
       ],
     },
     {
-      title: "Secciones",
-      items: allSections.map((s) => ({
-        label: s.title,
-        href: `/seccion/${s.slug}`,
-      })),
-    },
-    {
-      title: "Archivo",
-      items: [
-        { label: "Histórico", href: "/historico" },
-      ],
-    },
-  ];
-
-  // Agregar titulares rápidos si hay artículos
-  if (hasArticles) {
-    sidebarSections.push({
-      title: "En esta página",
+      title: "En esta edición",
       items: data.items.slice(0, 5).map((article) => ({
         label: article.title,
         href: `/articulo/${article.slug}`,
       })),
-    });
+    },
+  ];
+
+  if (!hasArticles) {
+    sidebarSections[1] = {
+      title: "En esta edición",
+      items: [
+        { label: "Sin titulares disponibles", href: "/historico" },
+      ],
+    };
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
           {/* Sidebar izquierda (desktop only) */}
@@ -76,7 +71,7 @@ export default async function HistoricPage(props: HistoricPageProps) {
 
           {/* Contenido principal */}
           <main className="lg:col-span-9">
-            <div className="bg-white border border-gray-200 shadow-sm">
+            <div className="bg-white border border-gray-200">
               {/* Header de página */}
               <div className="border-b border-gray-200 px-5 sm:px-6 py-5 sm:py-6">
                 <PageSectionHeader
