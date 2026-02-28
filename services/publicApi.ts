@@ -1,16 +1,11 @@
-/**
- * Servicio de API pública de LIBERTAD
- * Capa de abstracción sobre el cliente HTTP
- */
-
 import { PagedResponse, ArticleSummary, ArticleDetail } from "@/types";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5237/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-/**
- * Error personalizado para la API
- */
+if (!API_BASE_URL) {
+  throw new Error("NEXT_PUBLIC_API_URL is not configured.");
+}
+
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -22,9 +17,6 @@ export class ApiError extends Error {
   }
 }
 
-/**
- * Cliente HTTP genérico con manejo de errores y fallback
- */
 async function fetchFromApi<T>(
   endpoint: string,
   options: RequestInit = {}
@@ -64,10 +56,6 @@ async function fetchFromApi<T>(
   }
 }
 
-/**
- * Obtener artículos recientes (home / actualidad)
- * Últimos 7 días de artículos publicados
- */
 export async function getHome(
   page: number = 1,
   pageSize: number = 10
@@ -76,9 +64,6 @@ export async function getHome(
   return fetchFromApi(endpoint);
 }
 
-/**
- * Obtener artículos de una sección específica
- */
 export async function getSectionBySlug(
   slug: string,
   page: number = 1,
@@ -88,9 +73,6 @@ export async function getSectionBySlug(
   return fetchFromApi(endpoint);
 }
 
-/**
- * Obtener detalle completo de un artículo publicado
- */
 export async function getPublicArticleBySlug(
   slug: string
 ): Promise<ArticleDetail> {
@@ -98,9 +80,6 @@ export async function getPublicArticleBySlug(
   return fetchFromApi(endpoint);
 }
 
-/**
- * Obtener artículos archivados (más de 7 días)
- */
 export async function getArchive(
   page: number = 1,
   pageSize: number = 10
@@ -109,9 +88,6 @@ export async function getArchive(
   return fetchFromApi(endpoint);
 }
 
-/**
- * Verificar estado de salud de la API
- */
 export async function checkApiHealth(): Promise<boolean> {
   try {
     const response = await fetch(`${API_BASE_URL}/health`, {
