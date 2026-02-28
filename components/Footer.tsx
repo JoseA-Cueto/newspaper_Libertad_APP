@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="bg-white text-black py-10 mt-10 border-t border-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* About */}
           <div>
             <h3 className="text-black font-bold mb-4">LIBERTAD</h3>
@@ -35,22 +35,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
-          <div>
-            <h4 className="text-black font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/aviso-legal" className="hover:text-blue-900 transition">
-                  Aviso legal
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacidad" className="hover:text-blue-900 transition">
-                  Privacidad
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
 
         <div className="border-t border-gray-300 pt-8">

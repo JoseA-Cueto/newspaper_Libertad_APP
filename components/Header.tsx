@@ -17,9 +17,13 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="hidden md:flex items-center justify-between text-xs tracking-wide uppercase border-b border-gray-300 pb-3">
           <div className="flex items-center gap-2 text-black">
-            <span>Quiénes somos</span>
+            <Link href="/quienes-somos" className="hover:text-blue-900 transition-colors">
+              Quiénes somos
+            </Link>
             <span className="text-gray-400">·</span>
-            <span>Contacto</span>
+            <Link href="/contacto" className="hover:text-blue-900 transition-colors">
+              Contacto
+            </Link>
           </div>
           <time dateTime={new Date().toISOString()}>{today}</time>
         </div>

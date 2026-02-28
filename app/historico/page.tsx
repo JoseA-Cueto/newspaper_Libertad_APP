@@ -54,9 +54,7 @@ export default async function HistoricPage(props: HistoricPageProps) {
   if (!hasArticles) {
     sidebarSections[1] = {
       title: "En esta edición",
-      items: [
-        { label: "Sin titulares disponibles", href: "/historico" },
-      ],
+      items: [],
     };
   }
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 
 export default function CookieNotice() {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,14 +27,7 @@ export default function CookieNotice() {
           {/* Contenido */}
           <div className="flex-1 text-xs sm:text-sm">
             <p className="mb-2 leading-relaxed">
-              Este sitio utiliza cookies para mantener la sesión y mejorar tu experiencia. 
-              {" "}
-              <Link
-                href="/privacidad#cookies"
-                className="text-blue-400 hover:text-blue-300 underline"
-              >
-                Más información
-              </Link>
+              Este sitio utiliza cookies para mantener la sesión y mejorar tu experiencia.
             </p>
             <p className="text-xs text-gray-500 leading-relaxed">
               Nota: La política de cookies se actualizará cuando se definan herramientas adicionales de análisis.
